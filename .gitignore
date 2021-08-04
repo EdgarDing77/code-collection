@@ -1,0 +1,6 @@
+# Project exclude paths
+/algorithm/target/
+/concurrence/target
+/datastructure/target
+/interview/target
+/other/target
