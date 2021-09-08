@@ -18,6 +18,7 @@
         <module>concurrence</module>
         <module>other</module>
         <module>algorithm</module>
+        <module>simple-spring</module>
     </modules>
 
     <dependencies>

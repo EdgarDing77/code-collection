@@ -1,4 +1,4 @@
-package interview_solution;
+package written_examination_questions.alibaba;
 
 import java.util.Scanner;
 

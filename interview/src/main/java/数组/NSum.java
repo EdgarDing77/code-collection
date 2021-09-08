@@ -27,17 +27,22 @@ public class NSum {
         }
         Arrays.sort(nums);
         for (int i = 0; i < n - 2; i++) {
+            // 如果nums[i] > 0了，数组后面就不可能为0
             if (nums[i] > 0) {
                 return res;
             }
+            // 去重操作！！
             if (i != 0 && nums[i - 1] == nums[i]) {
                 continue;
             }
+            // 目标数为它的负数
             int target = -nums[i];
+            // j为mid指针，k为right指针，进行移动
             for (int j = i + 1, k = n - 1; j < k; ) {
                 int sum = nums[j] + nums[k];
                 if (sum == target) {
                     res.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    // ！去重复操作，这是关键
                     while (j < k && nums[j + 1] == nums[j]) {
                         j++;
                     }
@@ -51,7 +56,6 @@ public class NSum {
                 } else {
                     j++;
                 }
-
             }
         }
         return res;
@@ -120,7 +124,6 @@ public class NSum {
             }
         }
         return res;
-
     }
 
 

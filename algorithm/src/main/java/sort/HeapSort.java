@@ -22,9 +22,7 @@ public class HeapSort implements Sort {
     public int[] sort(int[] arr) {
         // 1.构建大顶堆
         int n = arr.length;
-        for (int i = n / 2; i >= 0; i--) {
-            maxHeapify(arr, i, n - 1);
-        }
+        buildHeap(arr, arr.length);
         // 2.调整堆结构 + 交换堆顶与末尾元素 -> 从而达到排序的目的
         for (int j = n - 1; j > 0; j--) {
             // 堆顶的元素由于是最大的，与末尾元素进行交换

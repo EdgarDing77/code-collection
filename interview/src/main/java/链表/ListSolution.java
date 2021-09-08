@@ -83,4 +83,24 @@ public class ListSolution {
         o.next = p;
         return head;
     }
+
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow, fast;
+        for (slow = head, fast = head; slow != null; ) {
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                break;
+            }
+        }
+        ListNode cur;
+        for (cur = head; cur != slow; ) {
+            cur = cur.next;
+            slow = slow.next;
+        }
+        return cur;
+    }
 }
