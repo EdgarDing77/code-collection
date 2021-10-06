@@ -1,4 +1,8 @@
-# My_Study
+# code_collection
+
+> 以下为本人在刷题或是学习上的一些代码合集。
+
+_**个人博客：www.fortuna7.top**_
 
 ## interview
 
