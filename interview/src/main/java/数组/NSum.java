@@ -12,6 +12,50 @@ import java.util.List;
  * @date:2021/6/25
  **/
 public class NSum {
+    /**
+     * 最接近的三数之和
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int best = 10000000;
+        // 枚举 a
+        for (int i = 0; i < n - 2; ++i) {
+            // 保证和上一次枚举的元素不相等
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            for (int j = i + 1, k = n - 1; j < k; ) {
+                int sum = nums[i] + nums[j] + nums[k];
+                // 如果和为 target 直接返回答案
+                if (sum == target) {
+                    return target;
+                }
+                // 根据差值的绝对值来更新答案
+                if (Math.abs(sum - target) < Math.abs(best - target)) {
+                    best = sum;
+                }
+                if (sum > target) {
+                    while (j < k && nums[k - 1] == nums[k]) {
+                        --k;
+                    }
+                    k--;
+                } else {
+                    while (j < k && nums[j + 1] == nums[j]) {
+                        ++j;
+                    }
+                    j++;
+                }
+            }
+        }
+        return best;
+    }
+
 
     /**
      * 三数之和为0

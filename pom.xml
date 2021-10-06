@@ -19,6 +19,7 @@
         <module>other</module>
         <module>algorithm</module>
         <module>simple-spring</module>
+        <module>sword-to-offer</module>
     </modules>
 
     <dependencies>

@@ -96,14 +96,15 @@ public class StringSolution {
             return "";
         }
         int index = 0;
-        for (; index < s1.length() && index < s2.length() && s1.charAt(index) == s2.charAt(index); index++) {
+        for (; index < s1.length() && index < s2.length() && s1.charAt(index) == s2.charAt(index);
+             index++) {
         }
         return s1.substring(0, index);
     }
 
     /**
      * 字符串转换整数
-     * 函数 myAtoi(string s) 的算法如下：
+     * 函数myAtoi(string s) 的算法如下：
      * <p>
      * 读入字符串并丢弃无用的前导空格
      * 检查下一个字符（假设还未到字符末尾）为正还是负号，读取该字符（如果有）。 确定最终结果是负数还是正数。 如果两者都不存在，则假定结果为正。
@@ -152,5 +153,53 @@ public class StringSolution {
             res = res * 10 + digit;
         }
         return signed ? res : -res;
+    }
+
+    /**
+     * 最大回文子串
+     *
+     * @param str
+     * @return
+     */
+    public String longestPalindrome(String str) {
+        String res = "";
+        for (int i = 0; i < str.length(); i++) {
+            String s1 = findPalindrome(str, i, i);
+            String s2 = findPalindrome(str, i, i + 1);
+            res = res.length() > s1.length() ? res : s1;
+            res = res.length() > s2.length() ? res : s2;
+        }
+        return res;
+    }
+
+    private String findPalindrome(String str, int l, int r) {
+        for (; l >= 0 && r < str.length() && str.charAt(l) == str.charAt(r); l--, r++) {
+        }
+        return str.substring(l + 1, r);
+    }
+
+
+    /**
+     * 计算字符串数组中，两个字符串之间最大不重复的字符个数
+     * 全是小写字母
+     * 如：
+     * abcsd arcd exe
+     * 最大的就是 abcsd exe
+     * output：8
+     *
+     * @param inputs
+     * @return
+     */
+    public int maxNoRepeatChar(String[] inputs) {
+        int n = inputs.length;
+        if (n == 0) {
+            return -1;
+        }
+        if (n == 1) {
+            return inputs[0].length();
+        }
+        int res = 0;
+        // todo: 暴力以外的方式？
+        return res;
     }
 }

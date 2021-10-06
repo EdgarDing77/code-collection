@@ -1,6 +1,10 @@
 package 数组;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Description:
@@ -66,14 +70,10 @@ public class ArraySolution {
 
     /**
      * 实现获取 下一个排列 的函数，算法需要将给定数字序列重新排列成字典序中下一个更大的排列。
-     * <p>
      * 如果不存在下一个更大的排列，则将数字重新排列成最小的排列（即升序排列）。
-     * <p>
      * 必须 原地 修改，只允许使用额外常数空间。
-     * <p>
      * Q.1 2 3 4 5
      * A.1 2 3 5 4
-     * <p>
      * Q.1 5 4 3 2
      * A. 2 1 3 4 5
      *
@@ -149,11 +149,8 @@ public class ArraySolution {
 
     /**
      * 给定一个整数数组 a，其中1 ≤ a[i] ≤ n （n为数组长度）, 其中有些元素出现两次而其他元素出现一次。
-     * <p>
      * 找到所有出现两次的元素。
-     * <p>
      * 你可以不用到任何额外空间并在O(n)时间复杂度内解决这个问题吗？
-     * <p>
      * 注意1 ≤ a[i] ≤ n
      * 通过这个来在原地数组进行记录
      *

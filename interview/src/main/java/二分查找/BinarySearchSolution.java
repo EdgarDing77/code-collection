@@ -26,8 +26,8 @@ public class BinarySearchSolution {
         if (len == 0) {
             return -1;
         }
-        int l = 0, r = len - 1;
-        for (; l <= r; ) {
+
+        for (int l = 0, r = len - 1; l <= r; ) {
             int mid = l + ((r - l) >> 1);
             if (nums[mid] == target) {
                 return mid;
@@ -37,6 +37,7 @@ public class BinarySearchSolution {
                 } else {
                     r = mid - 1;
                 }
+                // 这里不能为else if，若target在数组中找不到，则会死循环
             } else {
                 if (target < nums[mid] && target >= nums[l]) {
                     r = mid - 1;
