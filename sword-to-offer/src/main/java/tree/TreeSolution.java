@@ -186,4 +186,64 @@ public class TreeSolution {
             isSymmetric(left.right, right.left);
     }
 
+    /**
+     * 剑指 Offer 34. 二叉树中和为某一值的路径
+     * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
+     * <p>
+     * 叶子节点 是指没有子节点的节点。
+     *
+     * @param root
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> pathSum(TreeNode root, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        traverse(res, root, target, new ArrayList<>());
+        return res;
+    }
+
+    // 根节点到某一节点
+    private void traverse(List<List<Integer>> res, TreeNode root, int target, List<Integer> path) {
+        if (root == null) {
+            return;
+        }
+        path.add(root.val);
+        target -= root.val;
+        if (target == 0 && root.left == null && root.right == null) {
+            res.add(new ArrayList<>(path));
+        } else {
+            traverse(res, root.left, target, path);
+            traverse(res, root.right, target, path);
+        }
+        path.remove(path.size() - 1);
+    }
+
+    /**
+     * 剑指 Offer 54. 二叉搜索树的第k大节点
+     * 给定一棵二叉搜索树，请找出其中第k大的节点。
+     *
+     * @param root
+     * @param k
+     * @return
+     */
+    public int kthLargest(TreeNode root, int k) {
+        kthLargestHelper(root, k);
+        return ans;
+    }
+
+    private int ans = 0, cnt = 0;
+
+    private void kthLargestHelper(TreeNode root, int k) {
+        if (root == null) {
+            return;
+        }
+        kthLargestHelper(root.right, k);
+        if (++cnt == k) {
+            ans = root.val;
+        }
+        kthLargestHelper(root.left, k);
+    }
 }

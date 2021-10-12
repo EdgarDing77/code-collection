@@ -134,6 +134,121 @@ public class Solution {
         return copyHead;
     }
 
+
+    /**
+     * 剑指 Offer 18. 删除链表的节点
+     * 给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
+     * <p>
+     * 返回删除后的链表的头节点。
+     *
+     * @param head
+     * @param val
+     * @return
+     */
+    public ListNode deleteNode(ListNode head, int val) {
+        if (head == null) {
+            return head;
+        }
+        if (head.val == val) {
+            return head.next;
+        }
+        ListNode pre = null;
+        for (ListNode cur = head; cur.val != val; cur = cur.next) {
+            pre = cur;
+        }
+        pre.next = pre.next.next;
+        return head;
+    }
+
+    /**
+     * 剑指 Offer 22. 链表中倒数第k个节点
+     * 输入一个链表，输出该链表中倒数第k个节点。为了符合大多数人的习惯，本题从1开始计数，即链表的尾节点是倒数第1个节点。
+     * <p>
+     * 例如，一个链表有 6 个节点，从头节点开始，它们的值依次是 1、2、3、4、5、6。这个链表的倒数第 3 个节点是值为 4 的节点。
+     *
+     * @param head
+     * @param k
+     * @return
+     */
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        if (head == null) {
+            return null;
+        }
+        ListNode slow, fast;
+        for (fast = head; k-- > 0; fast = fast.next) {
+        }
+        for (slow = head; fast != null; slow = slow.next, fast = fast.next) {
+        }
+        return slow;
+    }
+
+    /**
+     * 剑指 Offer 25. 合并两个排序的链表
+     * 输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(-1), pre = dummyHead;
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
+                pre.next = l1;
+                pre = pre.next;
+                l1 = l1.next;
+            } else {
+                pre.next = l2;
+                pre = pre.next;
+                l2 = l2.next;
+            }
+        }
+        if (l1 != null) {
+            pre.next = l1;
+        }
+        if (l2 != null) {
+            pre.next = l2;
+        }
+        return dummyHead.next;
+    }
+
+    // 递归版本
+    public ListNode mergeTwoLists2(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+        if (l1.val <= l2.val) {
+            l1.next = mergeTwoLists2(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists2(l1, l2.next);
+            return l2;
+        }
+    }
+
+    /**
+     * 剑指 Offer 52. 两个链表的第一个公共节点
+     * 输入两个链表，找出它们的第一个公共节点。
+     *
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode p1, p2;
+        for (p1 = headA, p2 = headB; p1 != p2; ) {
+            p1 = p1 == null ? headB : p1.next;
+            p2 = p2 == null ? headA : p2.next;
+        }
+        return p1;
+    }
+
     class Node {
         int val;
         Node next;

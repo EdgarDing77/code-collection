@@ -1,5 +1,7 @@
 package dynamic_programming;
 
+import java.util.HashSet;
+
 /**
  * Description:
  *
@@ -125,4 +127,55 @@ public class Solution {
         }
         return dp[n];
     }
+
+    /**
+     * 剑指 Offer 46. 把数字翻译成字符串
+     * 给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。
+     * 一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。
+     *
+     * @param num
+     * @return
+     */
+    public int translateNum(int num) {
+        String str = String.valueOf(num);
+        int[] dp = new int[str.length() + 1];
+        dp[0] = dp[1] = 1;
+        for (int i = 2; i <= str.length(); i++) {
+            String tmpStr = str.substring(i - 2, i);
+            if (tmpStr.compareTo("10") >= 0 && tmpStr.compareTo("25") <= 0) {
+                dp[i] = dp[i - 1] + dp[i - 2];
+            } else {
+                dp[i] = dp[i - 1];
+            }
+        }
+        return dp[dp.length - 1];
+    }
+
+    /**
+     * 剑指 Offer 48. 最长不含重复字符的子字符串
+     * 请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。
+     *
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        if (n <= 1) {
+            return n;
+        }
+        char[] chs = s.toCharArray();
+        int l = 0, r = 0;
+        HashSet<Character> set = new HashSet<>();
+        int res = 0;
+        while (r < chs.length) {
+            char ch = chs[r++];
+            while (set.contains(ch)) {
+                set.remove(chs[l++]);
+            }
+            set.add(ch);
+            res = Math.max(res, set.size());
+        }
+        return res;
+    }
+
 }
