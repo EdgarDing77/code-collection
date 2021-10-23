@@ -3,6 +3,7 @@ package tree;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -245,5 +246,135 @@ public class TreeSolution {
             ans = root.val;
         }
         kthLargestHelper(root.left, k);
+    }
+
+    /**
+     * 剑指 Offer 55 - I. 二叉树的深度
+     * 输入一棵二叉树的根节点，求该树的深度。从根节点到叶节点依次经过的节点（含根、叶节点）形成树的一条路径，最长路径的长度为树的深度。
+     * @param root
+     * @return
+     */
+    public int maxDepth(TreeNode root) {
+        if(root == null) {
+            return 0;
+        }
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.max(left, right) + 1;
+    }
+
+    /**
+     * 剑指 Offer 55 - II. 平衡二叉树
+     * 输入一棵二叉树的根节点，判断该树是不是平衡二叉树。如果某二叉树中任意节点的左右子树的深度相差不超过1，那么它就是一棵平衡二叉树。
+     * @param root
+     * @return
+     */
+    public boolean isBalanced(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+        int left = maxDepth(root.left), right = maxDepth(root.right);
+        if(Math.abs(left - right) < 2) {
+            return isBalanced(root.left) && isBalanced(root.right);
+        }
+        return false;
+    }
+
+    /**
+     * 剑指 Offer 68 - I. 二叉搜索树的最近公共祖先
+     * 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
+     *
+     * 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+     *
+     * 例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5]
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) {
+            return null;
+        }
+        if(root == p || root == q) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if(left != null && right != null) {
+            return root;
+        }
+        if(left == null && right == null) {
+            return null;
+        }
+        return left == null ? right : left;
+    }
+
+
+    /**
+     * 剑指 Offer 07. 重建二叉树
+     * 输入某二叉树的前序遍历和中序遍历的结果，请构建该二叉树并返回其根节点。
+     *
+     * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+     * @param preorder
+     * @param inorder
+     * @return
+     */
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i=0; i<inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        return build(preorder, 0, preorder.length - 1,inorder, 0, inorder.length - 1, map);
+    }
+
+    private TreeNode build(int[] pre, int preL, int preR, int[] in, int inL, int inR,
+                           HashMap<Integer, Integer> map) {
+        if(preL > preR || inL > inR) {
+            return null;
+        }
+        int rootVal = pre[preL];
+        TreeNode node = new TreeNode(rootVal);
+        if(preL == preR) {
+            return node;
+        }
+        int rootIndex = map.get(rootVal);
+        int leftSize = rootIndex - inL;
+        int rightSize = inR - rootIndex;
+        node.left = build(pre, preL + 1, preL + leftSize, in, inL, rootIndex - 1, map);
+        node.right = build(pre, preR - rightSize + 1, preR, in, rootIndex + 1, inR, map);
+        return node;
+    }
+
+    /**
+     * 剑指 Offer 33. 二叉搜索树的后序遍历序列
+     * 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
+     * @param postorder
+     * @return
+     */
+    public boolean verifyPostorder(int[] postorder) {
+        // 后序 左右根
+        int n;
+        if((n = postorder.length) == 0) {
+            return true;
+        }
+        return verifyPostorder(postorder, 0, n- 1);
+    }
+
+    private boolean verifyPostorder(int[] postorder, int l, int r) {
+        if(l >= r) {
+            return true;
+        }
+        int root = postorder[r];
+        int k = l;
+        // 第一个大于k的
+        for(;k < r && postorder[k] < root; k++){}
+        // 判断右半边是否都是大于root
+        for(int i=k;i < r; i++) {
+            if(postorder[i] < root) {
+                return false;
+            }
+        }
+        return verifyPostorder(postorder, l, k-1) && verifyPostorder(postorder, k , r-1);
     }
 }
