@@ -1,5 +1,8 @@
 package string;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Description:
  *
@@ -163,5 +166,39 @@ public class Solution {
             res = res * 10 + (str.charAt(j) - '0');
         }
         return sign * res;
+    }
+
+    /**
+     * 剑指 Offer 38. 字符串的排列
+     * 输入一个字符串，打印出该字符串中字符的所有排列。
+     * <p>
+     * 你可以以任意顺序返回这个字符串数组，但里面不能有重复元素。
+     *
+     * @param s
+     * @return
+     */
+    public String[] permutation(String s) {
+        char[] chars = new char[s.length()];
+        Set<String> set = new HashSet<>();
+        boolean[] isViewed = new boolean[s.length()];
+
+        dfs(s, 0, chars, isViewed, set);
+        return set.toArray(new String[0]);
+    }
+
+    private void dfs(String s, int index, char[] chars, boolean[] isViewed, Set<String> set) {
+        if (index == s.length()) {
+            set.add(new String(chars));
+            return;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            if (isViewed[i]) {
+                continue;
+            }
+            isViewed[i] = true;
+            chars[index] = s.charAt(i);
+            dfs(s, index + 1, chars, isViewed, set);
+            isViewed[i] = false;
+        }
     }
 }

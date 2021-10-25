@@ -1,6 +1,5 @@
 package stack_queue;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -23,8 +22,8 @@ public class Solution {
      */
     public boolean validateStackSequences(int[] pushed, int[] popped) {
         Deque<Integer> stack = new LinkedList<>();
-        int j =0;
-        for(int elem : pushed) {
+        int j = 0;
+        for (int elem : pushed) {
             stack.push(elem);
             while (j < popped.length && !stack.isEmpty() && stack.peek() == popped[j]) {
                 stack.pop();
@@ -33,4 +32,35 @@ public class Solution {
         }
         return j == popped.length;
     }
+
+    /**
+     * 剑指 Offer 59 - I. 滑动窗口的最大值
+     * 给定一个数组 nums 和滑动窗口的大小 k，请找出所有滑动窗口里的最大值。
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums == null || nums.length == 0) {
+            return new int[] {};
+        }
+        Deque<Integer> queue = new LinkedList<>();
+        int[] res = new int[nums.length - k + 1];
+        for (int i = 0, j = 0; i < nums.length; i++) {
+            if (!queue.isEmpty() && i - k >= queue.peek()) {
+                queue.poll();
+            }
+            while (!queue.isEmpty() && nums[i] > nums[queue.peekLast()]) {
+                queue.pollLast();
+            }
+            queue.offer(i);
+            if (i >= k - 1) {
+                res[j++] = nums[queue.peek()];
+            }
+        }
+        return res;
+    }
+
+
 }
