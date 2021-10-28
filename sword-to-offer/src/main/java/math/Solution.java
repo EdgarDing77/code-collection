@@ -1,8 +1,5 @@
 package math;
 
-import java.util.Deque;
-import java.util.LinkedList;
-
 /**
  * Description:
  *
@@ -11,6 +8,18 @@ import java.util.LinkedList;
  * @date:2021/10/18
  **/
 public class Solution {
+
+
+    /**
+     * 剑指 Offer 51. 数组中的逆序对
+     * 在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。
+     * 输入一个数组，求出这个数组中的逆序对的总数。
+     *
+     * @param nums
+     * @return
+     */
+    int count = 0;
+
     /**
      * 剑指 Offer 16. 数值的整数次方
      * 实现 pow(x, n) ，即计算 x 的 n 次幂函数（即，xn）。不得使用库函数，同时不需要考虑大数问题。
@@ -147,21 +156,22 @@ public class Solution {
     /**
      * 剑指 Offer 39. 数组中出现次数超过一半的数字
      * 数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+     *
      * @param nums
      * @return
      */
     public int majorityElement(int[] nums) {
         // 摩尔投票
         int n = nums.length;
-        if(n == 0) {
+        if (n == 0) {
             return -1;
         }
         int vot = 0, res = nums[0];
-        for(int i=0; i<n; i++) {
-            if(vot == 0) {
+        for (int i = 0; i < n; i++) {
+            if (vot == 0) {
                 res = nums[i];
                 vot++;
-            } else if(res == nums[i]) {
+            } else if (res == nums[i]) {
                 vot++;
             } else {
                 vot--;
@@ -171,38 +181,11 @@ public class Solution {
     }
 
     /**
-     * 剑指 Offer 14- I. 剪绳子
-     * 给你一根长度为 n 的绳子，请把绳子剪成整数长度的 m 段（m、n都是整数，n>1并且m>1），每段绳子的长度记为 k[0],k[1]...k[m-1] 。
-     * 请问 k[0]*k[1]*...*k[m-1] 可能的最大乘积是多少？例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。
-     * @param n
-     * @return
-     */
-    public int cuttingRope(int n) {
-        /*
-        任何大于1的数都可由2和3相加组成（根据奇偶证明）
-        因为2*2=1*4，2*3>1*5, 所以将数字拆成2和3，能得到的积最大
-        因为2*2*2<3*3, 所以3越多积越大 时间复杂度O(n/3)，用幂函数可以达到O(log(n/3)), 因为n不大，所以提升意义不大，我就没用。 空间复杂度常数复杂度O(1)
-         */
-        if(n <= 3) {
-            return n - 1;
-        }
-        int div = n / 3;
-        int rem = n % 3;
-        long res = 1;
-        for(int i=0; i<div; i++) {
-            res *= i < div - 1 ? 3 : (rem == 2 ? 3 * rem : (3 + rem));
-            if(res >= 1000000007) {
-                res = res % 1000000007;
-            }
-        }
-        return (int)res;
-    }
-
-    /**
      * 剑指 Offer 62. 圆圈中最后剩下的数字
      * 0,1,···,n-1这n个数字排成一个圆圈，从数字0开始，每次从这个圆圈里删除第m个数字（删除后从下一个数字开始计数）。求出这个圆圈里剩下的最后一个数字。
-     *
+     * <p>
      * 例如，0、1、2、3、4这5个数字组成一个圆圈，从数字0开始每次删除第3个数字，则删除的前4个数字依次是2、0、4、1，因此最后剩下的数字是3。
+     *
      * @param n
      * @param m
      * @return
@@ -232,34 +215,205 @@ public class Solution {
     /**
      * 剑指 Offer 29. 顺时针打印矩阵
      * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
+     *
      * @param matrix
      * @return
      */
     public int[] spiralOrder(int[][] matrix) {
         int m, n;
-        if(matrix == null || (m = matrix.length) == 0 || (n = matrix[0].length) == 0) {
-            return new int[]{};
+        if (matrix == null || (m = matrix.length) == 0 || (n = matrix[0].length) == 0) {
+            return new int[] {};
         }
         int[] res = new int[m * n];
         int l = 0, r = n - 1, u = 0, d = m - 1;
-        for(int index = 0; index < res.length; ) {
-            for(int i=l; i<=r && index<res.length; i++) {
+        for (int index = 0; index < res.length; ) {
+            for (int i = l; i <= r && index < res.length; i++) {
                 res[index++] = matrix[u][i];
             }
             u++;
-            for(int i=u; i<=d && index<res.length; i++) {
+            for (int i = u; i <= d && index < res.length; i++) {
                 res[index++] = matrix[i][r];
             }
             r--;
-            for(int i=r; i>=l&&index<res.length; i--) {
+            for (int i = r; i >= l && index < res.length; i--) {
                 res[index++] = matrix[d][i];
             }
             d--;
-            for(int i=d; i>=u&&index<res.length; i--) {
+            for (int i = d; i >= u && index < res.length; i--) {
                 res[index++] = matrix[i][l];
             }
             l++;
         }
         return res;
+    }
+
+    /**
+     * 剑指 Offer 49. 丑数
+     * 我们把只包含质因子 2、3 和 5 的数称作丑数（Ugly Number）。求按从小到大的顺序的第 n 个丑数。
+     *
+     * @param n
+     * @return
+     */
+    public int nthUglyNumber(int n) {
+        if (n <= 0) {
+            return -1;
+        }
+        int[] dp = new int[n];
+        dp[0] = 1;
+        int id2 = 0, id3 = 0, id5 = 0;
+        for (int i = 1; i < n; i++) {
+            dp[i] = Math.min(dp[id2] * 2, Math.min(dp[id3] * 3, dp[id5] * 5));
+            if (dp[id2] * 2 == dp[i]) {
+                id2 += 1;
+            }
+            if (dp[id3] * 3 == dp[i]) {
+                id3 += 1;
+            }
+            if (dp[id5] * 5 == dp[i]) {
+                id5 += 1;
+            }
+        }
+        return dp[n - 1];
+    }
+
+    /**
+     * 剑指 Offer 60. n个骰子的点数
+     * 把n个骰子扔在地上，所有骰子朝上一面的点数之和为s。输入n，打印出s的所有可能的值出现的概率。
+     * <p>
+     * 你需要用一个浮点数数组返回答案，其中第 i 个元素代表这 n 个骰子所能掷出的点数集合中第 i 小的那个的概率。
+     *
+     * @param n
+     * @return
+     */
+    public double[] dicesProbability(int n) {
+        int[][] dp = new int[n + 1][6 * n + 1];
+        double[] ans = new double[5 * n + 1];
+        double all = Math.pow(6, n);
+        for (int i = 1; i <= 6; i++) {
+            dp[1][i] = 1;
+        }
+        for (int i = 1; i <= n; i++) {
+            for (int j = i; j <= 6 * n; j++) {
+                for (int k = 1; k <= 6; k++) {
+                    dp[i][j] += j >= k ? dp[i - 1][j - k] : 0;
+                    if (i == n) {
+                        ans[j - i] = dp[i][j] / all;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 剑指 Offer 17. 打印从1到最大的n位数
+     * 输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数 999。
+     *
+     * @param n
+     * @return
+     */
+    public int[] printNumbers(int n) {
+        int[] res = new int[(int) Math.pow(10, n) - 1];
+        for (int i = 1; i <= res.length; i++) {
+            res[i - 1] = i;
+        }
+        return res;
+    }
+
+    public int reversePairs(int[] nums) {
+        int len = nums.length;
+        if (len < 2) {
+            return 0;//不构成任何一对
+        }
+        mergesort(nums, 0, len - 1);
+        return count;
+    }
+
+    private int[] mergesort(int[] nums, int l, int r) {
+        if (l >= r) {
+            return new int[] {nums[l]};
+        }
+        int mid = l + ((r - l) >> 1);
+        int[] left = mergesort(nums, l, mid);
+        int[] right = mergesort(nums, mid + 1, r);
+        int[] res = new int[r - l + 1];
+        int i = 0, j = 0, index = 0;
+        while (i < left.length && j < right.length) {
+            if (left[i] <= right[j]) {
+                res[index++] = left[i++];
+            } else {
+                res[index++] = right[j++];
+                count += left.length - i;
+            }
+        }
+        while (i < left.length) {
+            res[index++] = left[i++];
+        }
+        while (j < right.length) {
+            res[index++] = right[j++];
+        }
+        return res;
+    }
+
+    /**
+     * 剑指 Offer 43. 1～n 整数中 1 出现的次数
+     * 输入一个整数 n ，求1～n这n个整数的十进制表示中1出现的次数。
+     * <p>
+     * 例如，输入12，1～12这些整数中包含1 的数字有1、10、11和12，1一共出现了5次。
+     *
+     * @param n
+     * @return
+     */
+    public int countDigitOne(int n) {
+        int digit = 1, res = 0;
+        int high = n / 10, cur = n % 10, low = 0;
+        while (high != 0 || cur != 0) {
+            if (cur == 0) {
+                res += high * digit;
+            } else if (cur == 1) {
+                res += high * digit + low + 1;
+            } else {
+                res += (high + 1) * digit;
+            }
+            low += cur * digit;
+            cur = high % 10;
+            high /= 10;
+            digit *= 10;
+        }
+        return res;
+    }
+
+    /**
+     * 剑指 Offer 44. 数字序列中某一位的数字
+     * 数字以0123456789101112131415…的格式序列化到一个字符序列中。
+     * 在这个序列中，第5位（从下标0开始计数）是5，第13位是1，第19位是4，等等。
+     * <p>
+     * 请写一个函数，求任意第n位对应的数字。
+     * 数字范围    数量  位数    占多少位
+     * 1-9        9      1       9
+     * 10-99      90     2       180
+     * 100-999    900    3       2700
+     * 1000-9999  9000   4       36000  ...
+     * <p>
+     * 例如 2901 = 9 + 180 + 2700 + 12 即一定是4位数,第12位   n = 12;
+     * 数据为 = 1000 + (12 - 1)/ 4  = 1000 + 2 = 1002
+     * 定位1002中的位置 = (n - 1) %  4 = 3    s.charAt(3) = 2;
+     *
+     * @param n
+     * @return
+     */
+    public int findNthDigit(int n) {
+        int digit = 1; // 位数
+        long start = 1; // 开始范围的第一个数
+        long count = 9; // 多少位
+        while (n > count) {
+            n -= count;
+            digit++;
+            start *= 10;
+            count = digit * start * 9;
+        }
+        // n-1 减去最开头的0
+        long num = start + (n - 1) / digit;
+        return Long.toString(num).charAt((n - 1) % digit) - '0';
     }
 }
