@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <groupId>top.edgarding.study</groupId>
-    <artifactId>code_collection</artifactId>
+    <artifactId>code-collection</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
