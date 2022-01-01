@@ -12,11 +12,11 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
     <modules>
-        <module>datastructure</module>
-        <module>concurrence</module>
-        <module>other</module>
-        <module>simple-spring</module>
+        <module>code-algorithm</module>
+        <module>code-other</module>
+        <module>code-interview</module>
     </modules>
 
     <dependencies>
