@@ -1,3 +1,12 @@
 # Project exclude paths
 target/
 test/
+
+
+.idea
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.iml
